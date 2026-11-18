@@ -370,7 +370,7 @@ function renderParentProductPreview(p){
   const file=productPhotoFiles[p.id]?.[slug]||productPhotoFiles[p.id]?.default;
   const title=`${p.name} · ${p.size||'Custom size'}`;
   const alt=selected?`${title} in ${selected}`:title;
-  const art=file?`<img src="product-images/${file}" alt="${htmlSafe(alt)}" loading="lazy">`:`<div class="parent-preview-placeholder"><span class="mini-bottle" aria-hidden="true"></span><span>Product photo can be added<br>for this parent item</span></div>`;
+  const art=file?`<img src="${file}" alt="${htmlSafe(alt)}" loading="lazy">`:`<div class="parent-preview-placeholder"><span class="mini-bottle" aria-hidden="true"></span><span>Product photo can be added<br>for this parent item</span></div>`;
   const colorControls=colors.length?`<div class="parent-color-list" role="group" aria-label="Choose product color">${colors.map(c=>{const key=c.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const swatch=productSwatches[key]||'#dce9ed';return`<button type="button" class="parent-color-chip ${c===selected?'active':''}" data-preview-color="${htmlSafe(c)}" aria-pressed="${c===selected}"><span class="parent-color-dot" style="--swatch:${swatch}"></span>${htmlSafe(c)}</button>`}).join('')}</div>`:'';
   const colorMeta=selected?` · ${htmlSafe(selected)} finish`:' · Single finish';
   const hint=colors.length?'Choose a finish to view its product photo. Color names remain editable above.':'Photo preview · No color variants configured for this item.';
