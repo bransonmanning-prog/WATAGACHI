@@ -17,73 +17,53 @@
     .form-welcome{display:flex;align-items:center;gap:12px;margin-bottom:7px}.login-mascot{width:52px;height:52px;object-fit:contain;border-radius:13px;background:#fff;border:1px solid #dcebed;box-shadow:0 5px 15px #10233c12;flex:none}.form-welcome .eyebrow{margin-bottom:3px}.form-welcome h2{margin:0}
     .brand-footer{position:relative;z-index:1;color:#aec4d2;font-size:10px;letter-spacing:.15px}.brand-footer strong{color:#fff}
     .form-panel{display:flex;align-items:center;justify-content:center;padding:38px clamp(22px,5vw,70px);background:var(--paper)}.form-wrap{width:min(440px,100%)}.mobile-brand{display:none}.form-wrap h2{font-size:30px;letter-spacing:-1.1px;margin:0 0 6px;color:var(--ink)}.form-intro{margin:0 0 24px;color:var(--muted);font-size:12px}
-    .login-card{padding:27px;background:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 40px #10233c0c}.role-switch{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:4px;background:#f0f4f5;border-radius:11px;margin-bottom:20px}.role-btn{border:0;border-radius:8px;background:transparent;padding:9px;color:#6c7f8e;font-size:11px;font-weight:750}.role-btn.active{background:#fff;color:var(--navy);box-shadow:0 2px 7px #10233c12}.role-btn .role-icon{display:inline-grid;place-items:center;width:19px;height:19px;margin-right:5px;border-radius:6px;background:var(--cyan);color:#087b92;vertical-align:middle}
-    .field{display:grid;gap:6px;margin-bottom:14px}.field label{font-size:10px;color:#566b7d;font-weight:750}.field input{width:100%;border:1px solid #dce4e8;border-radius:10px;padding:12px 13px;color:var(--ink);background:#fff;outline:none;transition:.15s}.field input:focus{border-color:#20aabd;box-shadow:0 0 0 3px #08bfd019}.field input::placeholder{color:#a2afb8}.submit{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:13px;background:linear-gradient(100deg,#087d99,#08aebf);color:#fff;font-weight:800;box-shadow:0 7px 16px #087d9923;transition:.15s}.submit:hover{filter:brightness(1.04);transform:translateY(-1px)}.arrow{font-size:16px;line-height:1}
-    .demo-note{display:flex;gap:9px;align-items:flex-start;margin-top:16px;padding:11px 12px;background:#f1f8f8;border:1px solid #dfefef;border-radius:10px;color:#607584;font-size:10px;line-height:1.5}.demo-note b{color:#14566d}.info-icon{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#d9f4f5;color:#08798d;font-size:11px;font-weight:900;flex:none}
+    .login-card{padding:27px;background:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 40px #10233c0c}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:4px;background:#f0f4f5;border-radius:11px;margin-bottom:20px}.auth-tab{border:0;border-radius:8px;background:transparent;padding:10px;color:#6c7f8e;font-size:12px;font-weight:750}.auth-tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 7px #10233c12}.auth-message{min-height:24px;margin:14px 0 0;color:#526d7c;font-size:12px}.auth-message:empty{display:none}.access-note{margin-top:14px;padding:11px 12px;background:#f1f8f8;border:1px solid #dfefef;border-radius:10px;color:#607584;font-size:10px;line-height:1.5}.access-note b{color:#14566d}
+    .field{display:grid;gap:6px;margin-bottom:14px}.field[hidden]{display:none!important}.field label{font-size:10px;color:#566b7d;font-weight:750}.field input{width:100%;border:1px solid #dce4e8;border-radius:10px;padding:12px 13px;color:var(--ink);background:#fff;outline:none;transition:.15s}.field input:focus{border-color:#20aabd;box-shadow:0 0 0 3px #08bfd019}.field input::placeholder{color:#a2afb8}.submit{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:13px;background:linear-gradient(100deg,#087d99,#08aebf);color:#fff;font-weight:800;box-shadow:0 7px 16px #087d9923;transition:.15s}.submit:hover{filter:brightness(1.04);transform:translateY(-1px)}.arrow{font-size:16px;line-height:1}
+    .customer-link{display:block;text-align:center;margin:14px 0 0;color:#087f98;font-size:12px;font-weight:750}.customer-link:hover{text-decoration:underline}
+    .access-note{display:flex;gap:9px;align-items:flex-start;margin-top:16px;padding:11px 12px;background:#f1f8f8;border:1px solid #dfefef;border-radius:10px;color:#607584;font-size:10px;line-height:1.5}.access-note b{color:#14566d}.info-icon{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#d9f4f5;color:#08798d;font-size:11px;font-weight:900;flex:none}
     .account-note{margin:18px 0 0;text-align:center;color:#7a8895;font-size:10px}.account-note button{border:0;background:none;color:#087f98;font-size:10px;font-weight:800;padding:0}.account-note button:disabled{color:#87939e;cursor:default}
     .form-footer{margin-top:22px;text-align:center;color:#8b98a2;font-size:9px}.form-footer span{color:#14aab8;font-weight:800}
+    .form-wrap{width:min(500px,100%)}.form-wrap h2{font-size:clamp(30px,3vw,38px)}.form-intro{font-size:16px;line-height:1.55}.login-card{padding:30px}.auth-tab{font-size:15px;padding:13px 12px}.field{gap:7px;margin-bottom:16px}.field label{font-size:14px}.field input{font-size:16px;padding:15px}.submit{font-size:16px;padding:16px}.auth-message{font-size:14px;line-height:1.5}.access-note{font-size:13px;padding:13px 14px}.customer-link{font-size:15px;margin-top:18px}.form-footer{font-size:12px}
     @media(max-width:1100px) and (min-width:851px){.brand-center{grid-template-columns:minmax(0,1fr) 165px;gap:12px}.brand-copy h1{font-size:clamp(34px,4vw,48px)}.login-product-card{max-width:165px}.login-product-card img{height:390px}}
     @media(max-width:850px){.login-shell{grid-template-columns:1fr}.brand-panel{min-height:375px;padding:22px 26px 24px}.brand-lockup{width:184px;height:56px}.brand-center{grid-template-columns:minmax(0,1fr) 170px;gap:14px;margin:10px 0 0}.brand-copy h1{font-size:36px;max-width:470px}.brand-copy p{font-size:12px}.login-product-card{max-width:170px}.login-product-card img{height:250px}.brand-footer{display:none}.form-panel{padding:30px 20px 40px}}
-    @media(max-width:540px){.brand-panel{min-height:345px;padding:18px 18px 21px}.brand-center{grid-template-columns:minmax(0,1fr) 100px;gap:8px;margin:8px 0 0}.brand-copy{max-width:100%}.brand-copy h1{font-size:30px;letter-spacing:-1.2px;margin:11px 0 9px;max-width:none}.brand-copy p{max-width:310px;font-size:10px;line-height:1.5}.brand-lockup{width:158px;height:49px}.login-product-card{max-width:100px}.login-product-card img{height:190px}.login-product-card figcaption{font-size:8px;padding:5px 0 0}.form-panel{padding:25px 15px 32px}.form-welcome{gap:9px}.login-mascot{width:44px;height:44px}.form-wrap h2{font-size:26px}.login-card{padding:21px 18px;border-radius:16px}}
+    @media(max-width:540px){.brand-panel{min-height:345px;padding:18px 18px 21px}.brand-center{grid-template-columns:minmax(0,1fr) 100px;gap:8px;margin:8px 0 0}.brand-copy{max-width:100%}.brand-copy h1{font-size:30px;letter-spacing:-1.2px;margin:11px 0 9px;max-width:none}.brand-copy p{max-width:310px;font-size:10px;line-height:1.5}.brand-lockup{width:158px;height:49px}.login-product-card{max-width:100px}.login-product-card img{height:190px}.login-product-card figcaption{font-size:8px;padding:5px 0 0}.form-panel{padding:25px 15px 32px}.form-welcome{gap:9px}.login-mascot{width:44px;height:44px}.form-wrap h2{font-size:26px}.login-card{padding:21px 18px;border-radius:16px}.auth-tab{font-size:13px;padding:11px 5px}.form-intro{font-size:14px}.field label{font-size:13px}.customer-link{font-size:14px}}
     @media(max-width:360px){.brand-panel{min-height:330px;padding-left:14px;padding-right:14px}.brand-center{grid-template-columns:minmax(0,1fr) 84px;gap:6px}.brand-copy h1{font-size:27px}.brand-copy p{font-size:9px}.login-product-card{max-width:84px}.login-product-card img{height:165px}}
   </style>
 </head>
 <body>
   <main class="login-shell">
     <section class="brand-panel" aria-label="WATAGACHI introduction">
-      <a class="brand-lockup" href="index.html" aria-label="WATAGACHI home"><img src="watagachi-wordmark.png" alt="WATAGACHI smart hydration" /></a>
+      <a class="brand-lockup" href="index.html" aria-label="WATAGACHI home"><img src="assets/watagachi-wordmark.png" alt="WATAGACHI smart hydration" /></a>
       <div class="brand-center">
         <div class="brand-copy">
           <div class="eyebrow">Hydration with a little personality</div>
           <h1>Every sip helps your buddy thrive.</h1>
           <p>Welcome to the WATAGACHI workspace—where smart hydration products, pickup orders, inventory, and your little water buddy come together.</p>
         </div>
-        <figure class="login-product-card"><img src="chug-bug-login-cutout.png" alt="WATAGACHI Chug Bug 32 oz bottle in Arctic blue"/><figcaption>Chug Bug · 32 oz</figcaption></figure>
+        <figure class="login-product-card"><img src="assets/product-images/chug-bug-login-cutout.png" alt="WATAGACHI Chug Bug 32 oz bottle in Arctic blue"/><figcaption>Chug Bug · 32 oz</figcaption></figure>
       </div>
       <div class="brand-footer"><strong>WATAGACHI</strong> · Smart hydration, made playful</div>
     </section>
-    <section class="form-panel" aria-label="Sign in">
+    <section class="form-panel" aria-label="Sign in or create account">
       <div class="form-wrap">
-        <div class="form-welcome"><img class="login-mascot" src="watagachi-mascot-logo.png" alt=""/><div><div class="eyebrow" style="color:#07829b">Welcome to WATAGACHI</div><h2 id="formTitle">Sign in to continue</h2></div></div>
-        <p class="form-intro" id="formIntro">Choose your preview and enter your email and password.</p>
-        <form class="login-card" id="demoLogin" autocomplete="on">
-          <div class="role-switch" role="tablist" aria-label="Preview type">
-            <button class="role-btn active" type="button" data-role="team" aria-pressed="true"><span class="role-icon">▦</span>Team workspace</button>
-            <button class="role-btn" type="button" data-role="customer" aria-pressed="false"><span class="role-icon">⌂</span>Pickup customer</button>
-          </div>
-          <div class="field"><label for="loginEmail">Email / username</label><input id="loginEmail" name="email" type="email" placeholder="you@example.com" autocomplete="username" required/><span style="font-size:9px;color:#82909b">For this preview, use your email as your username.</span></div>
-          <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required/></div>
-          <button class="submit" type="submit"><span id="submitLabel">Enter team demo</span><span class="arrow">→</span></button>
-          <div class="demo-note"><span class="info-icon">i</span><span><b>Demo sign-in only.</b> Your email and password are not checked or saved as an account yet. Real password login will be connected when Supabase is ready.</span></div>
+        <div class="form-welcome"><img class="login-mascot" src="assets/watagachi-mascot-logo.png" alt=""/><div><div class="eyebrow" style="color:#07829b">Welcome to WATAGACHI</div><h2 id="formTitle">Sign in to continue</h2></div></div>
+        <p class="form-intro" id="formIntro">Sign in with your WATAGACHI account.</p>
+        <form class="login-card" id="loginForm" data-mode="signin" autocomplete="on">
+          <div class="auth-tabs" role="tablist" aria-label="Employee account"><button class="auth-tab active" id="employeeSigninTab" type="button" data-auth-mode="signin" role="tab" aria-selected="true">Employee sign in</button><button class="auth-tab" id="employeeCreateTab" type="button" data-auth-mode="signup" role="tab" aria-selected="false">Create employee account</button></div>
+          <div class="field" id="displayNameField" hidden><label for="displayName">Name</label><input id="displayName" name="displayName" autocomplete="name" placeholder="Your name"/></div>
+          <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" name="email" type="email" placeholder="you@example.com" autocomplete="username" required/></div>
+          <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" name="password" type="password" placeholder="Enter password" autocomplete="current-password" minlength="6" required/></div>
+          <button class="submit" id="authSubmit" type="submit"><span id="submitLabel">Sign in</span><span class="arrow">→</span></button>
+          <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+          <div class="access-note" id="authNote"><b>Employee access:</b> Sign in with your assigned employee account.</div>
         </form>
-        <p class="account-note">New to WATAGACHI? <button type="button" disabled title="Account creation will be enabled with Supabase">Create account · coming later</button></p>
-        <div class="form-footer">Team ERP preview <span>•</span> WATAGACHI smart hydration</div>
+        <a class="customer-link" href="customer.html">Customer sign in or create an account for pickup</a>
+        <div class="form-footer">WATAGACHI ERP <span>•</span> Smart hydration, made playful</div>
       </div>
     </section>
   </main>
-  <script>
-    (()=>{
-      let role='team';
-      const buttons=[...document.querySelectorAll('[data-role]')];
-      const label=document.getElementById('submitLabel');
-      const intro=document.getElementById('formIntro');
-      buttons.forEach(button=>button.addEventListener('click',()=>{
-        role=button.dataset.role;
-        buttons.forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
-        label.textContent=role==='customer'?'Enter pickup preview':'Enter team demo';
-        intro.textContent=role==='customer'?'Preview product availability and pickup orders.':'Enter the WATAGACHI team ERP preview.';
-      }));
-      document.getElementById('demoLogin').addEventListener('submit',event=>{
-        event.preventDefault();
-        const email=document.getElementById('loginEmail').value.trim();
-        if(!email||!document.getElementById('loginPassword').value)return;
-        sessionStorage.setItem('watagachi-demo-auth','true');
-        sessionStorage.setItem('watagachi-demo-role',role);
-        sessionStorage.setItem('watagachi-demo-email',email);
-        if(role==='customer')sessionStorage.setItem('watagachi-customer',email);
-        location.href='app.html';
-      });
-    })();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
