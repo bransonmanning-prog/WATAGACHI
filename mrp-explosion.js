@@ -108,14 +108,41 @@
   function renderDemandTable(calc){
     const host=document.querySelector('#ordersList');if(!host)return;
     const orders=(calc.orders||[]).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-    host.innerHTML=orders.length?`<div class="table-wrap"><table class="table mrp-demand-table"><thead><tr><th>Order</th><th>Customer</th><th>Requested date</th><th>Parent product</th><th>Quantity</th><th>Status</th></tr></thead><tbody>${orders.map(o=>`<tr><td><strong>${escMrp(o.ref||'Sales order')}</strong></td><td>${escMrp(o.customer||'Customer')}</td><td>${fmtDate(o.date)}</td><td>${escMrp(product(o.product)?.name||'Unknown product')}</td><td><strong>${Number(o.qty||0)}</strong></td><td><span class="pill ${o.planningOnly?'yellow':'blue'}">${o.planningOnly?'Planning only':'Confirmed'}</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No confirmed customer orders in this planning window.</div>';
+    host.innerHTML=orders.length?`<div class="table-wrap"><table class="table mrp-demand-table"><thead><tr><th>Order</th><th>Customer</th><th>Requested date</th><th>Parent product</th><th>Quantity</th><th>Status</th></tr></thead><tbody>${orders.map(o=>`<tr><td><strong>${escMrp(o.ref||'Sales order')}</strong></td><td>${escMrp(o.customer||'Customer')}</td><td>${fmtDate(o.date)}</td><td>${escMrp(product(o.product)?.name||'Unknown product')}</td><td><strong>${Number(o.qty||0)}</strong></td><td><span class="pill ${o.planningOnly||o.status==='Order Placed'?'yellow':'blue'}">${o.planningOnly?'Planning only':escMrp(o.status||'Confirmed')}</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No confirmed customer orders in this planning window.</div>';
+  }
+  function chooseSupplier(plan,need){
+    const candidates=(data.suppliers||[]).map(s=>{
+      const unitCost=Number(data.supplierItemQuotes?.[s.id]?.[plan.itemId]);
+      const leadDays=Math.max(0,Number(s.leadDays??plan.lead)||0);
+      const eta=addDays(today(),leadDays);
+      return{s,unitCost,leadDays,eta};
+    }).filter(x=>Number.isFinite(x.unitCost)&&x.unitCost>0);
+    if(!candidates.length)return null;
+    const onTime=candidates.filter(x=>!need||x.eta<=need).sort((a,b)=>a.unitCost-b.unitCost||a.leadDays-b.leadDays||a.s.name.localeCompare(b.s.name));
+    if(onTime.length)return{...onTime[0],reason:'Lowest quoted price that meets the need date'};
+    candidates.sort((a,b)=>a.eta.localeCompare(b.eta)||a.unitCost-b.unitCost||a.s.name.localeCompare(b.s.name));
+    return{...candidates[0],reason:'Fastest quoted option; all suppliers miss the need date'};
   }
   function renderActionQueue(result){
     const host=document.querySelector('#actionTable');if(!host)return;
     const action=result.components.filter(p=>actionableQty(p)>0).sort((a,b)=>firstOrderBy(a).localeCompare(firstOrderBy(b)));
     const orders=mrpCalc().orders||[];
     const supplierFor={shell:'SUP-SM',lid:'SUP-BP',sensor:'SUP-NC',base:'SUP-MO',seal:'SUP-AS',straw:'SUP-CC',strawSensor:'SUP-NC'};
-    host.innerHTML=action.length?`<table class="table mrp-action-table"><thead><tr><th>Suggested order</th><th>Supplier · lead time</th><th>Need by</th><th>Order by</th><th>Est. spend</th><th>Status</th><th>Action</th></tr></thead><tbody>${action.map(p=>{const suggested=actionableQty(p),need=firstNeed(p),by=firstOrderBy(p),supplier=data.suppliers.find(s=>s.id===supplierFor[p.itemId])||data.suppliers[0],unitCost=Number(data.supplierItemQuotes?.[supplier?.id]?.[p.itemId]??p.item.cost??0),drivers=new Map();for(const order of orders){const parent=product(order.product),per=Number(parent?.bom?.[p.itemId]||0);if(parent&&per>0)drivers.set(parent.name,(drivers.get(parent.name)||0)+Number(order.qty||0));}const parentText=[...drivers].map(([name,qty])=>`${name} (${qty})`).join(', '),status=by&&by<today()?'Past due':'Ready to order';return`<tr><td class="mrp-action-item"><strong>${escMrp(p.item.name)}</strong><div class="small-muted">${escMrp(p.item.sku||'')} · suggested ${suggested} units</div><div class="mrp-action-reason">${p.totalGross} needed; ${p.totalNet} net shortage after ${p.beginning} on hand + ${p.scheduledTotal} open PO${committedMrpQty(p.itemId)?` · ${committedMrpQty(p.itemId)} already committed on MRP PO`:''}${parentText?` · for ${escMrp(parentText)}`:''}</div></td><td>${escMrp(supplier?.name||'Supplier not set')}<div class="small-muted">${Number(supplier?.leadDays??p.lead)} days quoted · MRP lead ${p.lead} days · ${money2(unitCost)}/unit</div></td><td>${need?fmtDate(need):'—'}</td><td><strong>${by?fmtDate(by):'—'}</strong></td><td>${money2(suggested*unitCost)}</td><td><span class="pill ${by&&by<today()?'red':'yellow'}">${status}</span></td><td><button type="button" class="btn primary mrp-create-po" aria-label="Create purchase order for ${escMrp(suggested)} ${escMrp(p.item.name)}" data-component="${escMrp(p.itemId)}" data-qty="${suggested}">Create PO</button></td></tr>`}).join('')}</tbody></table>`:'<div class="empty">All child components are covered for this planning window.</div>';
+    const rows=action.map(p=>{
+      const suggested=actionableQty(p),need=firstNeed(p),by=firstOrderBy(p),choice=chooseSupplier(p,need);
+      const fallback=data.suppliers.find(s=>s.id===supplierFor[p.itemId])||data.suppliers[0];
+      const supplier=choice?.s||fallback,unitCost=choice?.unitCost??Number(p.item.cost||0);
+      const leadDays=choice?.leadDays??Number(supplier?.leadDays??p.lead),eta=choice?.eta||'';
+      const drivers=new Map();
+      for(const order of orders){const parent=product(order.product),per=Number(parent?.bom?.[p.itemId]||0);if(parent&&per>0)drivers.set(parent.name,(drivers.get(parent.name)||0)+Number(order.qty||0));}
+      const parentText=[...drivers].map(([name,qty])=>name+' ('+qty+')').join(', ');
+      const pastOrderBy=Boolean(by&&by<today()),lateByNeed=Boolean(need&&eta&&eta>need);
+      const status=pastOrderBy?'Past due':lateByNeed?'Supplier ETA after need date':'Ready to order';
+      const statusClass=pastOrderBy||lateByNeed?'red':'yellow';
+      const reason=choice?.reason||(supplier?'Supplier quote unavailable; estimated at item cost':'Add a supplier quote');
+      return '<tr><td class="mrp-action-item"><strong>'+escMrp(p.item.name)+'</strong><div class="small-muted">'+escMrp(p.item.sku||'')+' · suggested '+suggested+' units</div><div class="mrp-action-reason">'+p.totalGross+' needed; '+p.totalNet+' net shortage after '+p.beginning+' on hand + '+p.scheduledTotal+' open PO'+(committedMrpQty(p.itemId)?' · '+committedMrpQty(p.itemId)+' already committed on MRP PO':'')+(parentText?' · for '+escMrp(parentText):'')+'</div></td><td>'+escMrp(supplier?.name||'Supplier not set')+'<div class="small-muted">'+leadDays+' days quoted'+(eta?' · ETA '+fmtDate(eta):'')+' · '+money2(unitCost)+'/unit</div><div class="small-muted">'+escMrp(reason)+'</div></td><td>'+(need?fmtDate(need):'—')+'</td><td><strong>'+(by?fmtDate(by):'—')+'</strong></td><td>'+money2(suggested*unitCost)+'</td><td><span class="pill '+statusClass+'">'+status+'</span></td><td><button type="button" class="btn primary mrp-create-po" aria-label="Create purchase order for '+escMrp(suggested)+' '+escMrp(p.item.name)+' from '+escMrp(supplier?.name||'selected supplier')+'" data-component="'+escMrp(p.itemId)+'" data-qty="'+suggested+'" data-supplier="'+escMrp(supplier?.id||'')+'" data-unit-cost="'+unitCost+'">Create PO</button></td></tr>';
+    }).join('');
+    host.innerHTML=action.length?'<table class="table mrp-action-table"><thead><tr><th>Suggested order</th><th>Recommended supplier · lead time</th><th>Need by</th><th>Order by</th><th>Est. spend</th><th>Status</th><th>Action</th></tr></thead><tbody>'+rows+'</tbody></table>':'<div class="empty">All child components are covered for this planning window.</div>';
   }
   function refreshMrpView(){
     const calc=mrpCalc(),result=renderExplosion(calc);renderComponentSummary(result);renderDemandTable(calc);renderActionQueue(result);
@@ -136,7 +163,7 @@
   document.querySelector('#actionTable')?.addEventListener('click',event=>{
     const button=event.target.closest('.mrp-create-po');if(!button)return;
     const componentId=button.dataset.component,qty=Number(button.dataset.qty);if(!componentId||qty<1)return;
-    document.dispatchEvent(new CustomEvent('watagachi:mrp-create-po',{detail:{componentId,qty}}));
+    document.dispatchEvent(new CustomEvent('watagachi:mrp-create-po',{detail:{componentId,qty,supplierId:button.dataset.supplier,unitCost:Number(button.dataset.unitCost)}}));
   });
   renderMrp();
 })();
