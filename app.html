@@ -103,12 +103,14 @@
     .mrp-explosion{display:grid;gap:12px}.explosion-heading{margin:20px 0 8px;font-size:15px;color:#17445a}.mrp-parent-block,.mrp-component-block{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff}.mrp-parent-block>summary,.mrp-component-block>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:#f7fafb;font-size:14px}.mrp-parent-block>summary::-webkit-details-marker,.mrp-component-block>summary::-webkit-details-marker{display:none}.mrp-parent-block>summary:after,.mrp-component-block>summary:after{content:"＋";color:var(--blue);font-size:18px;font-weight:700}.mrp-parent-block[open]>summary:after,.mrp-component-block[open]>summary:after{content:"−"}.mrp-summary-main{display:grid;gap:3px}.mrp-summary-main strong{font-size:15px;color:var(--ink)}.mrp-summary-main span,.mrp-summary-stats{font-size:12px;color:var(--muted)}.mrp-summary-stats{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}.mrp-settings{display:flex;gap:12px;flex-wrap:wrap;padding:12px 15px;border-bottom:1px solid var(--line);background:#fbfdfe}.mrp-settings label{display:flex;align-items:center;gap:7px;font-size:12px;color:#526a79;font-weight:700}.mrp-settings input{width:82px;border:1px solid #d8e2e7;border-radius:7px;padding:7px;font-size:14px;color:var(--ink);background:#fff}.mrp-timeline-wrap{overflow:auto;padding:0 12px 12px}.mrp-timeline{width:100%;min-width:750px;border-collapse:collapse}.mrp-timeline th,.mrp-timeline td{padding:9px 10px;border-bottom:1px solid #eaf0f2;text-align:left;font-size:12px;vertical-align:top}.mrp-timeline th{color:#5c7280;text-transform:uppercase;font-size:10px;letter-spacing:.45px;background:#fff}.mrp-timeline td:first-child{font-weight:700;color:#263d4c;white-space:nowrap}.mrp-timeline td:nth-child(2){color:#102f44;font-weight:750}.mrp-timeline .projected-row td{background:#f5fafb;color:#183e51;font-weight:700}.timeline-qty{display:block;font-size:13px;font-weight:750;color:#17344b}.timeline-date{display:block;font-size:10px;color:#6d7f8d;margin-top:2px;white-space:nowrap}.timeline-now{background:#fff8e9!important;color:#795b1d!important}.explosion-help{font-size:12px;color:var(--muted);margin:6px 0 12px}.mrp-demand-table{min-width:730px}.mrp-action-table{min-width:1000px}.mrp-action-item{min-width:220px;white-space:normal}.mrp-action-reason{max-width:360px;white-space:normal;line-height:1.45;color:#718692}
     .login-admin-card .card-body{padding-bottom:20px}.login-admin-form{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.login-admin-form .control label{font-size:13px}.login-admin-form .control input{font-size:15px;padding:12px}.login-admin-form .btn{font-size:14px}.login-admin-card .form-note{font-size:13px;line-height:1.55;margin-top:14px}.login-admin-card .notice{font-size:13px}
     @media(max-width:700px){#view-mrp .hero-art{right:16%;top:0;bottom:0;width:140px;height:auto;overflow:visible}#view-mrp .hero-art img{width:128px;height:100%;max-height:150px;right:3px;top:50%;bottom:auto;transform:translateY(-50%);object-fit:contain}.mrp-parent-block>summary,.mrp-component-block>summary{align-items:flex-start;flex-direction:column}.mrp-summary-stats{justify-content:flex-start}.mrp-settings{gap:8px}.login-admin-form{grid-template-columns:1fr}.mrp-explosion-card .pill{align-self:flex-start}}
+    #view-mrp>.dashboard-grid{margin-top:18px}
+    #view-mrp>.card.section-gap{margin-top:20px}
   </style>
 </head>
 <body>
 <div class="app">
   <aside class="sidebar">
-    <a class="brand" href="#" aria-label="WATAGACHI home"><img class="brand-logo" src="watagachi-wordmark.png" alt="WATAGACHI smart hydration logo"/><span class="brand-caption">SMART HYDRATION · ERP</span></a>
+    <a class="brand" href="#" aria-label="WATAGACHI home"><img class="brand-logo" src="assets/watagachi-wordmark.png" alt="WATAGACHI smart hydration logo"/><span class="brand-caption">SMART HYDRATION · ERP</span></a>
     <nav class="navgroup" aria-label="Main navigation">
       <div class="navlabel">Workspace</div>
       <button class="navbtn active" data-view="dashboard"><span class="nav-plain-icon">⌂</span>Dashboard</button>
@@ -268,7 +270,7 @@
       </div>
       <article class="card section-gap"><div class="card-head"><div><div class="card-title">Protect the current shared data</div><div class="card-sub">Download the current Supabase record before changing database policies.</div></div><button class="btn primary" type="button" id="downloadStateBackup">Download data backup</button></div><div class="card-body"><p class="form-note" id="backupStatus" role="status" aria-live="polite">This reads the current record without changing it.</p></div></article>
     </section>
-    <img class="corner-mascot" src="watagachi-mascot-logo.png" alt="WATAGACHI hydration buddy logo" aria-hidden="true"/><div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <img class="corner-mascot" src="assets/watagachi-mascot-logo.png" alt="WATAGACHI hydration buddy logo" aria-hidden="true"/><div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
 </div>
 
@@ -379,7 +381,7 @@ function renderParentProductPreview(p){
   const file=productPhotoFiles[p.id]?.[slug]||productPhotoFiles[p.id]?.default;
   const title=`${p.name} · ${p.size||'Custom size'}`;
   const alt=selected?`${title} in ${selected}`:title;
-  const art=file?`<img src="product-images/${file}" alt="${htmlSafe(alt)}" loading="lazy">`:`<div class="parent-preview-placeholder"><span class="mini-bottle" aria-hidden="true"></span><span>Product photo can be added<br>for this parent item</span></div>`;
+  const art=file?`<img src="assets/product-images/${file}" alt="${htmlSafe(alt)}" loading="lazy">`:`<div class="parent-preview-placeholder"><span class="mini-bottle" aria-hidden="true"></span><span>Product photo can be added<br>for this parent item</span></div>`;
   const colorControls=colors.length?`<div class="parent-color-list" role="group" aria-label="Choose product color">${colors.map(c=>{const key=c.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const swatch=productSwatches[key]||'#dce9ed';return`<button type="button" class="parent-color-chip ${c===selected?'active':''}" data-preview-color="${htmlSafe(c)}" aria-pressed="${c===selected}"><span class="parent-color-dot" style="--swatch:${swatch}"></span>${htmlSafe(c)}</button>`}).join('')}</div>`:'';
   const colorMeta=selected?` · ${htmlSafe(selected)} finish`:' · Single finish';
   const hint=colors.length?'Choose a finish to view its product photo. Color names remain editable above.':'Photo preview · No color variants configured for this item.';

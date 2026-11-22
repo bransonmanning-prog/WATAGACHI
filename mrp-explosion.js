@@ -106,7 +106,7 @@
   function renderDemandTable(calc){
     const host=document.querySelector('#ordersList');if(!host)return;
     const orders=(calc.orders||[]).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-    host.innerHTML=orders.length?`<div class="table-wrap"><table class="table mrp-demand-table"><thead><tr><th>Order</th><th>Customer</th><th>Requested date</th><th>Parent product</th><th>Quantity</th><th>Status</th></tr></thead><tbody>${orders.map(o=>`<tr><td><strong>${escMrp(o.ref||'Sales order')}</strong></td><td>${escMrp(o.customer||'Customer')}</td><td>${fmtDate(o.date)}</td><td>${escMrp(product(o.product)?.name||'Unknown product')}</td><td><strong>${Number(o.qty||0)}</strong></td><td><span class="pill blue">Confirmed</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No confirmed customer orders in this planning window.</div>';
+    host.innerHTML=orders.length?`<div class="table-wrap"><table class="table mrp-demand-table"><thead><tr><th>Order</th><th>Customer</th><th>Requested date</th><th>Parent product</th><th>Quantity</th><th>Status</th></tr></thead><tbody>${orders.map(o=>`<tr><td><strong>${escMrp(o.ref||'Sales order')}</strong></td><td>${escMrp(o.customer||'Customer')}</td><td>${fmtDate(o.date)}</td><td>${escMrp(product(o.product)?.name||'Unknown product')}</td><td><strong>${Number(o.qty||0)}</strong></td><td><span class="pill ${o.planningOnly?'yellow':'blue'}">${o.planningOnly?'Planning only':'Confirmed'}</span></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No confirmed customer orders in this planning window.</div>';
   }
   function renderActionQueue(result){
     const host=document.querySelector('#actionTable');if(!host)return;
