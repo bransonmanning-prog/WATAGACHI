@@ -105,7 +105,9 @@
     @media(max-width:700px){#view-mrp .hero-art{right:16%;top:0;bottom:0;width:140px;height:auto;overflow:visible}#view-mrp .hero-art img{width:128px;height:100%;max-height:150px;right:3px;top:50%;bottom:auto;transform:translateY(-50%);object-fit:contain}.mrp-parent-block>summary,.mrp-component-block>summary{align-items:flex-start;flex-direction:column}.mrp-summary-stats{justify-content:flex-start}.mrp-settings{gap:8px}.login-admin-form{grid-template-columns:1fr}.mrp-explosion-card .pill{align-self:flex-start}}
     #view-mrp>.dashboard-grid{margin-top:18px}
     #view-mrp>.card.section-gap{margin-top:20px}
-  </style>
+  
+    .report-sales-best{color:#16845d!important;font-weight:800!important}.report-sales-lowest{color:#b44a43!important;font-weight:800!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -399,7 +401,7 @@ $('#orderForm').addEventListener('submit',e=>{e.preventDefault();const f=new For
 $('#exportCsv').addEventListener('click',()=>{const f=getFinancials();const rows=[['Account','Amount'],['Net sales',f.sales.toFixed(2)],['Cost of goods sold',(-f.cogs).toFixed(2)],['Gross profit',f.gross.toFixed(2)],['Operating expenses',(-f.expenses).toFixed(2)],['Operating income',f.net.toFixed(2)],['Inventory value',f.invValue.toFixed(2)],['Inventory turns',f.turns.toFixed(2)]];const csv=rows.map(r=>r.join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='watagachi-pnl.csv';a.click();URL.revokeObjectURL(a.href)});
 $('#orderDate').value=addDays(today(),9);$('#saleDate').value=today();renderAll();
 </script>
-<script src="https://unpkg.com/@zxing/browser@0.2.1"></script><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="modules.js?v=42"></script><script>
+<script src="https://unpkg.com/@zxing/browser@0.2.1"></script><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="modules.js?v=43"></script><script>
 document.querySelector('[data-employee-signout]')?.addEventListener('click',()=>window.watagachiSignOut?.());
 </script><script src="mrp-explosion.js?v=42"></script></body>
 </html>
